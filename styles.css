@@ -15,6 +15,7 @@ body {
   font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: #111111;
   line-height: 1.6;
+  background-color: #ffffff;
 }
 
 /* Theme variables */
@@ -44,15 +45,22 @@ body {
   padding: 0 1.5rem;
 }
 
+/* sections start hidden and slightly down */
 .nn-section {
   padding: 5rem 0;
   position: relative;
-  z-index: 1; /* above background svg */
+  z-index: 1;
+  background-color: #ffffff;
+
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.5s ease-out;
 }
 
 .nn-section-alt {
-  background-color: rgba(255, 255, 255, 0.86);
-  backdrop-filter: blur(6px);
+  background-color: #f8f8fb;
 }
 
 .nn-section-header {
@@ -96,6 +104,11 @@ body {
   gap: 0.75rem;
   text-decoration: none;
   color: inherit;
+}
+
+.nn-logo {
+  height: 40px;
+  width: auto;
 }
 
 .nn-logo-mark {
@@ -160,88 +173,35 @@ body {
   width: 100%;
 }
 
-/* ===== Hero ===== */
+/* ===== HERO PANEL (Flock-style text over animation) ===== */
 
-.nn-hero {
-  padding-top: 6rem;
-  padding-bottom: 5rem;
-  background: transparent;
+.nn-hero-panel {
+  position: relative;
+  z-index: 1;
+  min-height: 220vh; /* taller than one viewport to give scroll room */
+  background: transparent; /* let animation show through */
+  padding-top: 2rem; /* give space under header */
+  padding-bottom: 80vh; /* tweak: 60vh–120vh depending on your preference */
 }
 
-.nn-hero-inner {
-  max-width: 640px;
-  padding: 1.75rem 1.5rem;
-  background-color: rgba(255, 255, 255, 0.86);
-  border-radius: var(--nn-radius-lg);
-  box-shadow: var(--nn-shadow-soft);
-  border: 1px solid rgba(229, 229, 234, 0.9);
+.nn-hero-sticky {
+  position: sticky;
+  top: 0.5rem; /* near top, below header */
 }
 
-.nn-eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 0.76rem;
-  color: var(--nn-accent-blue);
-  margin-bottom: 0.9rem;
-}
-
-.nn-hero-inner h1 {
-  font-size: clamp(2.4rem, 4vw, 3.3rem);
-  line-height: 1.1;
-  margin: 0 0 1.25rem 0;
-}
-
-.nn-hero-subtitle {
-  margin: 0 0 1.75rem 0;
-  color: var(--nn-text-muted);
-}
-
-.nn-hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-/* ===== Buttons ===== */
-
-.nn-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.7rem 1.4rem;
-  border-radius: var(--nn-radius-pill);
-  font-size: 0.9rem;
-  font-weight: 500;
-  border: 1px solid transparent;
-  text-decoration: none;
-  cursor: pointer;
-  transition:
-    transform 0.1s ease-out,
-    box-shadow 0.1s ease-out,
-    background 0.1s ease-out,
-    color 0.1s ease-out,
-    border-color 0.1s ease-out;
-}
-
-.nn-button-primary {
-  background: linear-gradient(135deg, var(--nn-accent-blue), var(--nn-accent-orange));
-  color: #ffffff;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
-}
-
-.nn-button-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
-}
-
-.nn-button-ghost {
-  border-color: var(--nn-border-subtle);
-  color: var(--nn-text-main);
-  background-color: #ffffff;
-}
-
-.nn-button-ghost:hover {
-  border-color: var(--nn-accent-blue);
+.nn-hero-sentence {
+  position: absolute;
+  top: 35rem; /* adjust if needed; this is the vertical position */
+  left: 50%; /* pushes text toward the beige center */
+  transform: translateX(-50%); /* centers it nicely */
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 600;
+  margin: 0;
+  max-width: none;
+  color: #111111;
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.8);
+  white-space: nowrap; /* keeps it in one line */
+  z-index: 10; /* stays above video */
 }
 
 /* ===== Grids / cards ===== */
@@ -299,6 +259,48 @@ body {
 .nn-app-item p {
   margin: 0;
   color: var(--nn-text-muted);
+}
+
+/* ===== Buttons ===== */
+
+.nn-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.4rem;
+  border-radius: var(--nn-radius-pill);
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.1s ease-out,
+    box-shadow 0.1s ease-out,
+    background 0.1s ease-out,
+    color 0.1s ease-out,
+    border-color 0.1s ease-out;
+}
+
+.nn-button-primary {
+  background: linear-gradient(135deg, var(--nn-accent-blue), var(--nn-accent-orange));
+  color: #ffffff;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+}
+
+.nn-button-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+}
+
+.nn-button-ghost {
+  border-color: var(--nn-border-subtle);
+  color: var(--nn-text-main);
+  background-color: #ffffff;
+}
+
+.nn-button-ghost:hover {
+  border-color: var(--nn-accent-blue);
 }
 
 /* ===== Contact / form ===== */
@@ -366,7 +368,7 @@ body {
 .nn-footer {
   border-top: 1px solid var(--nn-border-subtle);
   padding: 1.5rem 0 2rem 0;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: #ffffff;
 }
 
 .nn-footer-inner {
@@ -390,130 +392,213 @@ body {
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+  background-color: #fef7f1; /* beige-ish */
+}
+
+/* .nn-bg-animation::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      to right,
+      #f7f7f7 0,   #f7f7f7 9%,   
+      transparent 9%, transparent 91%,
+      #f7f7f7 91%, #f7f7f7 100%  
+    );
+} */
+
+/* once the hero is done, reveal them */
+body.nn-after-hero .nn-section {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.nn-bg-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /* Center the SVG and let it scale */
 .nn-bg-animation svg {
-  width: min(900px, 120vw);
+  width: min(880px, 120vw);
   height: auto;
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 52%;
   transform: translate(-50%, -50%);
 }
 
-/* Disable any old keyframe animations (we drive it via scroll) */
-.lab-beaker-group,
-.lab-liquid-stream,
-.lab-tube-glow-circle,
-.lab-chain-single,
-.lab-chain-final {
-  animation: none !important;
-}
+/* Base lab colors / styling */
 
-/* Base lab colors */
-.lab-bg       { fill: #f5f5f7; }
-.lab-table    { fill: #e2e2ea; }
-.lab-skin     { fill: #ffcc99; }
-.lab-coat     { fill: #ffffff; }
-.lab-hair     { fill: #222222; }
-.lab-beaker   { fill: var(--nn-accent-blue); }
-.lab-liquid   { fill: var(--nn-accent-orange); }
+.lab-bg {
+  fill: #f5f7fb;
+}
+.lab-table {
+  fill: #eceff7;
+}
+.lab-skin {
+  fill: #ffcc99;
+}
+.lab-coat {
+  fill: #ffffff;
+  stroke: var(--nn-accent-blue);
+  stroke-width: 3;
+}
+.lab-hair {
+  fill: var(--nn-accent-blue);
+}
+.lab-arm {
+  stroke: var(--nn-accent-blue);
+  fill: none;
+}
+.lab-beaker {
+  fill: var(--nn-accent-blue);
+}
 .lab-test-tube {
   fill: #ffffff;
   stroke: var(--nn-accent-blue);
   stroke-width: 2;
 }
+.lab-liquid {
+  fill: var(--nn-accent-orange);
+}
+.lab-tube-glow {
+  fill: rgba(255, 122, 26, 0.25);
+}
+.lab-liquid-stream {
+  stroke: var(--nn-accent-orange);
+}
+.lab-label {
+  fill: #82889a;
+  font-size: 11px;
+  font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Links */
+
+.lab-link-vertical {
+  fill: var(--nn-accent-orange);
+  stroke: var(--nn-accent-blue);
+  stroke-width: 3;
+}
+
 .lab-chain-link {
   fill: none;
   stroke: var(--nn-accent-blue);
   stroke-width: 4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+}
+.lab-chain-link-orange {
+  fill: none;
+  stroke: var(--nn-accent-orange);
+  stroke-width: 4;
 }
 
 /* Smooth transitions between scroll stages */
+.lab-ground,
+.lab-beaker-group,
 .lab-liquid-stream,
-.lab-tube-glow-circle,
-.lab-chain-single,
-.lab-chain-final,
-.lab-beaker-group {
+.lab-tube-glow,
+.lab-link-flying,
+.lab-chain-final {
   transition:
-    opacity 0.35s ease-out,
-    transform 0.45s ease-out;
+    opacity 0.45s ease-out,
+    transform 0.6s ease-out;
 }
 
 /* ===== Scroll stages (frame-based) ===== */
 
-/* Stage 0 – idle, no pour, no chain */
+/* Stage 0 – scientist idle, nothing happening */
 body.nn-stage-0 .lab-beaker-group {
-  transform-origin: 215px 115px;
+  transform-origin: center;
   transform: rotate(0deg);
 }
 body.nn-stage-0 .lab-liquid-stream,
-body.nn-stage-0 .lab-tube-glow-circle,
-body.nn-stage-0 .lab-chain-single,
+body.nn-stage-0 .lab-tube-glow,
+body.nn-stage-0 .lab-link-flying,
 body.nn-stage-0 .lab-chain-final {
   opacity: 0;
+}
+body.nn-stage-0 .lab-ground {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Stage 1 – pouring into tube */
 body.nn-stage-1 .lab-beaker-group {
-  transform-origin: 215px 115px;
-  transform: rotate(-20deg);
+  transform-origin: center;
+  transform: rotate(-22deg);
 }
 body.nn-stage-1 .lab-liquid-stream,
-body.nn-stage-1 .lab-tube-glow-circle {
+body.nn-stage-1 .lab-tube-glow {
   opacity: 1;
 }
-body.nn-stage-1 .lab-chain-single,
+body.nn-stage-1 .lab-link-flying,
 body.nn-stage-1 .lab-chain-final {
   opacity: 0;
 }
+body.nn-stage-1 .lab-ground {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-/* Stage 2 – chain link shoots up */
+/* Stage 2 – liquid became a vertical link that shoots up left */
 body.nn-stage-2 .lab-beaker-group {
-  transform-origin: 215px 115px;
+  transform-origin: center;
   transform: rotate(-10deg);
 }
 body.nn-stage-2 .lab-liquid-stream,
-body.nn-stage-2 .lab-tube-glow-circle {
-  opacity: 1;
+body.nn-stage-2 .lab-tube-glow {
+  opacity: 0;
 }
-body.nn-stage-2 .lab-chain-single {
+body.nn-stage-2 .lab-link-flying {
   opacity: 1;
-  transform: translateY(-20px);
+  transform: translate(-42px, -90px) rotate(-8deg); /* diagonal up-left */
 }
 body.nn-stage-2 .lab-chain-final {
   opacity: 0;
 }
+body.nn-stage-2 .lab-ground {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-/* Stage 3 – final chain attached */
+/* Stage 3 – ground slides down, final chain appears at top */
 body.nn-stage-3 .lab-beaker-group {
-  transform-origin: 215px 115px;
+  transform-origin: center;
   transform: rotate(0deg);
 }
 body.nn-stage-3 .lab-liquid-stream,
-body.nn-stage-3 .lab-tube-glow-circle,
-body.nn-stage-3 .lab-chain-single {
+body.nn-stage-3 .lab-tube-glow,
+body.nn-stage-3 .lab-link-flying {
   opacity: 0;
+}
+body.nn-stage-3 .lab-ground {
+  opacity: 0;
+  transform: translateY(40px);
 }
 body.nn-stage-3 .lab-chain-final {
   opacity: 1;
+  transform: translate(0, 0);
 }
 
-/* Optional: page tint per stage (Flock-style vibe) */
+/* Optional subtle background tint per stage */
 body.nn-stage-0 {
   background: radial-gradient(circle at 0% 0%, #e4f0ff, #ffffff);
 }
 body.nn-stage-1 {
-  background: radial-gradient(circle at 0% 0%, #d9ecff, #fff9f3);
+  background: radial-gradient(circle at 0% 0%, #dcecff, #fff7f0);
 }
 body.nn-stage-2 {
-  background: radial-gradient(circle at 0% 0%, #ffd9b8, #ffffff);
+  background: radial-gradient(circle at 0% 0%, #ffd7b3, #ffffff);
 }
 body.nn-stage-3 {
-  background: radial-gradient(circle at 0% 0%, #ffe1c4, #fff7ed);
+  background: radial-gradient(circle at 0% 0%, #ffe0bf, #fff7ed);
 }
 
 /* ===== Responsive ===== */
@@ -529,12 +614,13 @@ body.nn-stage-3 {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .nn-hero {
+  .nn-hero-panel {
     padding-top: 5rem;
+    min-height: 200vh;
   }
 
-  .nn-hero-inner {
-    margin-top: 1.5rem;
+  .nn-hero-sticky {
+    top: 40vh;
   }
 }
 
@@ -550,10 +636,5 @@ body.nn-stage-3 {
 
   .nn-section {
     padding: 3.75rem 0;
-  }
-
-  .nn-hero-actions {
-    flex-direction: column;
-    align-items: flex-start;
   }
 }

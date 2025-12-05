@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Blockchain for Science</title>
+  <title>ChainLab – Blockchain for Science</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Font -->
@@ -14,24 +14,27 @@
 </head>
 <body class="nn-stage-0">
 
-  <!-- Full-screen background animation (SVG loaded via JS) -->
-  <div
-    class="nn-bg-animation"
-    data-svg="bg-animation.svg"
-    aria-hidden="true">
-  </div>
+  <!-- Full-screen background animation  -->
+<div class="nn-bg-animation" aria-hidden="true">
+  <video class="nn-bg-video" muted playsinline preload="auto">
+    <source src="hero-animation-banded.mp4" type="video/mp4">
+  </video>
+</div>
 
   <!-- HEADER -->
   <header class="nn-header">
     <div class="nn-container nn-header-inner">
-      <a href="#top" class="nn-logo-link">
-        <!-- Replace with your logo image if you want -->
+      <!-- <a href="#top" class="nn-logo-link">
         <div class="nn-logo-mark">⛓️</div>
         <div class="nn-logo-text">
           <span class="nn-logo-title">ChainLab</span>
           <span class="nn-logo-tagline">Blockchain for Science</span>
         </div>
-      </a>
+      </a> -->
+      <a href="#top" class="nn-logo-link">
+        <img src="logo-surtin.png" alt="Dart" class="nn-logo">
+        <span class="nn-logo-text">Blockchain for Science</span>
+      </a>      
       <nav class="nn-nav">
         <a href="#about">About</a>
         <a href="#technology">Technology</a>
@@ -42,25 +45,15 @@
   </header>
 
   <main id="top">
-    <!-- HERO -->
-    <section class="nn-section nn-hero">
-      <div class="nn-container nn-hero-inner">
-        <p class="nn-eyebrow">Blockchain for open science</p>
-        <h1>From experiments to verifiable chains.</h1>
-        <p class="nn-hero-subtitle">
-          A cartoon scientist pours a beaker into a test tube, and the result snaps into
-          a blockchain link behind your content&mdash;just like we snap experiments,
-          data, and code into a verifiable provenance graph.
-        </p>
-        <div class="nn-hero-actions">
-          <a href="#contact" class="nn-button nn-button-primary">Start a pilot</a>
-          <a href="#technology" class="nn-button nn-button-ghost">How it works</a>
-        </div>
+    <!-- HERO PANEL: only one sentence scrolling over the animation -->
+    <section class="nn-hero-panel">
+      <div class="nn-container nn-hero-sticky">
+        <p class="nn-hero-sentence">From experiments to verifiable chains.</p>
       </div>
     </section>
 
-    <!-- ABOUT -->
-    <section id="about" class="nn-section nn-section-alt">
+    <!-- AFTER HERO: normal sections on white background -->
+    <section id="about" class="nn-section">
       <div class="nn-container nn-grid-2">
         <div>
           <h2>Why chain scientific work?</h2>
@@ -86,8 +79,7 @@
       </div>
     </section>
 
-    <!-- TECHNOLOGY -->
-    <section id="technology" class="nn-section">
+    <section id="technology" class="nn-section nn-section-alt">
       <div class="nn-container">
         <header class="nn-section-header">
           <h2>The protocol behind the cartoon</h2>
@@ -129,8 +121,7 @@
       </div>
     </section>
 
-    <!-- APPLICATIONS -->
-    <section id="applications" class="nn-section nn-section-alt">
+    <section id="applications" class="nn-section">
       <div class="nn-container">
         <header class="nn-section-header">
           <h2>Applications</h2>
@@ -168,7 +159,6 @@
       </div>
     </section>
 
-    <!-- CONTACT -->
     <section id="contact" class="nn-section nn-contact">
       <div class="nn-container nn-grid-2">
         <div>
@@ -225,7 +215,6 @@
     </section>
   </main>
 
-  <!-- FOOTER -->
   <footer class="nn-footer">
     <div class="nn-container nn-footer-inner">
       <p>&copy; 2025 ChainLab. All rights reserved.</p>
@@ -233,53 +222,86 @@
     </div>
   </footer>
 
-  <script>
+    <script>
     // Clear form values on page load (prevents back-button caching)
     window.addEventListener("pageshow", function (event) {
-      if (event.persisted) {
+        if (event.persisted) {
         document.querySelectorAll("form").forEach(function (f) { f.reset(); });
-      }
+        }
     });
 
-    // Load external SVG into .nn-bg-animation
+    // Scroll-based stages and video scrubbing
     (function () {
-      var container = document.querySelector(".nn-bg-animation");
-      if (!container) return;
+        var body = document.body;
+        var hero = document.querySelector(".nn-hero-panel");
+        var video = document.querySelector(".nn-bg-video");
+        var stages = 4;
 
-      var url = container.getAttribute("data-svg");
-      if (!url) return;
+        if (!hero || !video) return;
 
-      fetch(url)
-        .then(function (res) { return res.text(); })
-        .then(function (svg) {
-          container.innerHTML = svg;
-        })
-        .catch(function (err) {
-          console.error("Failed to load background SVG:", err);
-        });
-    })();
+        var heroTop = 0;
+        var heroHeight = 1;
+        var videoDuration = 1;
 
-    // Map scroll position to discrete background "frames"
-    (function () {
-      var stages = 4;
-      var body = document.body;
+        // Don't actually play; we scrub currentTime manually.
+        video.pause();
+        video.preload = "auto";
 
-      function updateStage() {
-        var scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
-        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        var progress = docHeight > 0 ? scrollTop / docHeight : 0;
-
-        var idx = Math.min(stages - 1, Math.floor(progress * stages));
-
-        for (var i = 0; i < stages; i++) {
-          body.classList.toggle("nn-stage-" + i, i === idx);
+        // If duration is already known
+        if (!isNaN(video.duration) && video.duration > 0) {
+        videoDuration = video.duration;
         }
-      }
 
-      window.addEventListener("scroll", updateStage, { passive: true });
-      window.addEventListener("resize", updateStage);
-      updateStage();
+        // Update duration once metadata is loaded
+        video.addEventListener("loadedmetadata", function () {
+        if (video.duration > 0) {
+            videoDuration = video.duration;
+        }
+        });
+
+        function measureHero() {
+        var rect = hero.getBoundingClientRect();
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+        heroTop = rect.top + scrollTop;
+        heroHeight = rect.height || 1;
+        }
+
+        function updateStageAndVideo() {
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+
+        // Progress inside hero: 0 at heroTop, 1 at heroTop + heroHeight
+        var raw = (scrollTop - heroTop) / heroHeight;
+        var progress = Math.min(Math.max(raw, 0), 1); // clamp 0–1
+
+        // Discrete stages (if you still want bg tint / other effects)
+        var idx = Math.min(stages - 1, Math.floor(progress * stages));
+        for (var i = 0; i < stages; i++) {
+            body.classList.toggle("nn-stage-" + i, i === idx);
+        }
+
+        // Fade animation away after hero
+        var afterHero = scrollTop >= heroTop + heroHeight * 0.9;
+        body.classList.toggle("nn-after-hero", afterHero);
+
+        // Scrub video to match scroll
+        var t = progress * videoDuration;
+        if (!isNaN(t)) {
+            video.currentTime = t;
+        }
+        }
+
+        function onResize() {
+        measureHero();
+        updateStageAndVideo();
+        }
+
+        window.addEventListener("scroll", updateStageAndVideo, { passive: true });
+        window.addEventListener("resize", onResize);
+
+        measureHero();
+        updateStageAndVideo();
     })();
-  </script>
+    </script>
+
 </body>
 </html>

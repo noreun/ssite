@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background / table -->
+  <rect class="lab-bg" x="0" y="0" width="320" height="260" rx="18" />
+  <rect class="lab-table" x="0" y="180" width="320" height="80" />
+
+  <!-- Scientist body -->
+  <g transform="translate(35,70)">
+    <!-- coat -->
+    <rect class="lab-coat" x="40" y="45" width="70" height="70" rx="12" />
+    <!-- head -->
+    <circle class="lab-skin" cx="75" cy="30" r="18" />
+    <!-- hair -->
+    <path class="lab-hair" d="M60 20 Q75 2 90 20 Q84 12 75 12 Q66 12 60 20Z" />
+    <!-- simple face -->
+    <circle cx="69" cy="30" r="2" fill="#222222" />
+    <circle cx="81" cy="30" r="2" fill="#222222" />
+    <path d="M69 38 Q75 42 81 38" stroke="#222222" stroke-width="1.5" fill="none" />
+  </g>
+
+  <!-- Beaker in hand (this group will be rotated by CSS per stage) -->
+  <g class="lab-beaker-group">
+    <!-- arm -->
+    <path d="M120 115 Q150 105 180 115" stroke="#ffffff" stroke-width="10" stroke-linecap="round" />
+    <!-- beaker -->
+    <g>
+      <path class="lab-beaker" d="M195 100 L215 100 L220 130 Q207 135 190 130 Z" />
+      <path d="M195 100 H215" stroke="#ffffff" stroke-width="3" stroke-linecap="round" />
+      <!-- liquid in beaker -->
+      <path class="lab-liquid" d="M192 120 Q207 124 222 120 Q222 130 192 130Z" opacity="0.85" />
+    </g>
+  </g>
+
+  <!-- Test tube on table -->
+  <g transform="translate(110,150)">
+    <rect class="lab-test-tube" x="0" y="-40" width="24" height="40" rx="6" />
+    <rect class="lab-liquid" x="2" y="-12" width="20" height="10" rx="4" opacity="0.9" />
+    <circle class="lab-tube-glow-circle" cx="12" cy="-10" r="20" fill="rgba(255,122,26,0.26)" />
+  </g>
+
+  <!-- Liquid stream from beaker to tube -->
+  <path
+    class="lab-liquid-stream"
+    d="M204 118 Q180 140 140 135"
+    stroke="rgba(255,122,26,0.9)"
+    stroke-width="4"
+    stroke-linecap="round"
+    fill="none"
+  />
+
+  <!-- Single chain link shooting up from tube -->
+  <g class="lab-chain-single" transform="translate(122,100)">
+    <rect class="lab-chain-link" x="-6" y="-14" width="32" height="28" rx="12" />
+  </g>
+
+  <!-- Final chain (two linked links) on the right -->
+  <g class="lab-chain-final" transform="translate(220,80)">
+    <rect class="lab-chain-link" x="-28" y="-14" width="36" height="28" rx="12" />
+    <rect class="lab-chain-link" x="0" y="-14" width="36" height="28" rx="12" />
+  </g>
+
+  <!-- Labels -->
+  <text x="30" y="215" fill="#777" font-size="11" font-family="Space Grotesk, system-ui">
+    Experiments
+  </text>
+  <text x="202" y="60" fill="#777" font-size="11" font-family="Space Grotesk, system-ui">
+    Blockchain
+  </text>
+</svg>

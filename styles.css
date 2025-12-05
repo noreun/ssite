@@ -395,6 +395,9 @@ body {
   opacity: 1;
   transition: opacity 0.5s ease-out;
   background-color: #fef7f1; /* beige-ish */
+  background-image: url("frames/frame_001.jpg");
+  background-size: cover;
+  background-position: center;
 }
 
 /* .nn-bg-animation::after {
@@ -439,6 +442,21 @@ body.nn-after-hero .nn-section {
   left: 50%;
   top: 52%;
   transform: translate(-50%, -50%);
+}
+
+#nn-mobile-canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  #nn-mobile-canvas {
+    display: block;
+    position: absolute;
+    inset: 0;
+  }
 }
 
 /* Base lab colors / styling */
@@ -647,15 +665,37 @@ body.nn-stage-3 {
 }
 
 @media (max-width: 768px) {
-  .nn-hero-panel {
-    min-height: 120vh;
-    padding-bottom: 40vh;
+  /* Always show content on mobile */
+  .nn-section {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Don’t fade out the background animation on mobile */
+  .nn-bg-animation {
+    opacity: 1;
+  }
+
+  body.nn-after-hero .nn-bg-animation {
+    opacity: 1;
   }
 
   .nn-hero-sentence {
-    font-size: 1.1rem;
+    position: absolute;
+    top: 23rem;
     left: 50%;
     transform: translateX(-50%);
+    width: 90%;
+    max-width: 22rem;
+    font-size: clamp(1.1rem, 4vw, 1.4rem);
     text-align: center;
+    white-space: normal; /* allow wrapping */
+  }  
+}
+
+@media (max-width: 768px) {
+  .nn-hero-panel {
+    min-height: 220vh;   /* was 220vh */
+    padding-bottom: 110vh; /* was 80vh */
   }
 }

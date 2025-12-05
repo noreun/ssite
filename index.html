@@ -15,11 +15,18 @@
 <body class="nn-stage-0">
 
   <!-- Full-screen background animation  -->
-<div class="nn-bg-animation" aria-hidden="true">
-  <video class="nn-bg-video" muted playsinline preload="auto">
-    <source src="hero-animation-banded.mp4" type="video/mp4">
-  </video>
-</div>
+    <div class="nn-bg-animation">
+    <!-- Desktop video -->
+    <video class="nn-bg-video nn-bg-video-desktop" muted playsinline preload="auto">
+        <source src="hero-animation-intra.mp4" type="video/mp4">
+    </video>
+
+    <!-- Mobile video -->
+    <video class="nn-bg-video nn-bg-video-mobile" muted playsinline preload="auto">
+        <source src="hero-animation-mobile.mp4" type="video/mp4">
+    </video>
+    </div>
+
 
   <!-- HEADER -->
   <header class="nn-header">
@@ -226,8 +233,24 @@
     // Scroll-based stages and video scrubbing
     (function () {
         var body = document.body;
-        var hero = document.querySelector(".nn-hero-panel");
-        var video = document.querySelector(".nn-bg-video");
+
+        var isMobile = window.matchMedia("(max-width: 768px)").matches;
+        var desktopVideo = document.querySelector('.nn-bg-video-desktop');
+        var mobileVideo  = document.querySelector('.nn-bg-video-mobile');
+        var hero = document.querySelector('.nn-hero-panel');
+
+        if (!isMobile) {
+        // DESKTOP: keep your existing scroll sync logic, but just use desktopVideo
+        var video = desktopVideo;
+        // your current scroll handler goes here
+        // window.addEventListener('scroll', function() { ... });
+        } else {
+        // MOBILE: no scroll-sync – just play the light video normally
+        if (mobileVideo) {
+            mobileVideo.play().catch(() => {});
+        }
+        }
+
         var stages = 4;
 
         if (!hero || !video) return;

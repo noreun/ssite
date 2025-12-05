@@ -424,6 +424,13 @@ body.nn-after-hero .nn-section {
   object-fit: cover;
 }
 
+/* default: desktop visible, mobile hidden */
+.nn-bg-video-mobile { display: none; }
+
+@media (max-width: 768px) {
+  .nn-bg-video-desktop { display: none; }
+  .nn-bg-video-mobile  { display: block; }
+}
 /* Center the SVG and let it scale */
 .nn-bg-animation svg {
   width: min(880px, 120vw);
@@ -636,5 +643,19 @@ body.nn-stage-3 {
 
   .nn-section {
     padding: 3.75rem 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .nn-hero-panel {
+    min-height: 120vh;
+    padding-bottom: 40vh;
+  }
+
+  .nn-hero-sentence {
+    font-size: 1.1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
   }
 }
